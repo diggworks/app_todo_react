@@ -1,5 +1,8 @@
 import { useState } from "react";
 import "./styles.css";
+import { InputTodo } from "./components/InputTodo";
+import { IncompleteTodos } from "./components/IncompleteTodos";
+import { CompleteTodos } from "./components/CompleteTodos";
 
 export default function App() {
   const [todoText, setTodoText] = useState("");
@@ -41,43 +44,17 @@ export default function App() {
 
   return (
     <>
-      <div className="input-area">
-        <input
-          id="add-text"
-          type="text"
-          placeholder="Todoを入力"
-          value={todoText}
-          onChange={onChangeTodoText}
-        />
-        <button onClick={onClickAdd}>追加</button>
-      </div>
-      <div className="incomplete-are">
-        <p>未完了のTodo</p>
-        <ul id="incomplete-task-list" className="task-list">
-          {incompleteTodos.map((todo, i) => {
-            return (
-              <li key={todo}>
-                <p>{todo}</p>
-                <button onClick={() => onClickComplete(i)}>完了</button>
-                <button onClick={() => onClickDelete(i)}>削除</button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="complete-are">
-        <p>完了したTodo</p>
-        <ul id="complete-task-list" className="task-list">
-          {completeTodos.map((todo, i) => {
-            return (
-              <li key={todo}>
-                <p>{todo}</p>
-                <button onClick={() => onClickBack(i)}>戻す</button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      <InputTodo
+        todoText={todoText}
+        onChangeTodoText={onChangeTodoText}
+        onClickAdd={onClickAdd}
+      />
+      <IncompleteTodos
+        incompleteTodos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+      />
+      <CompleteTodos completeTodos={completeTodos} onClickBack={onClickBack} />
     </>
   );
 }
